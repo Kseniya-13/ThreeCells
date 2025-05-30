@@ -7,6 +7,7 @@ namespace TriVRud
 		public const int Hight = 10;
 		public static Cell[,] Cells;
 		public static Point Cursor = new Point(0, 0);
+		public static Point Selected;
 
 		public Field()
 		{
@@ -16,21 +17,19 @@ namespace TriVRud
 
 		public void Print()
 		{
-			bool isCursor = false;
-			for (int y = 0; y < Hight; y++)
+            Console.Clear();
+
+            for (int y = 0; y < Hight; y++)
 			{
 				for (int x = 0; x < Width; x++)
 				{
-					if(Cursor.X == x && Cursor.Y == y)
-					{
-						isCursor = true;
-					}
+					bool isCursor = (Cursor.X == x && Cursor.Y == y);
 
-					Cells[y, x].Print(isCursor);
+					bool isSelected = (Selected != null && Selected.X == x && Selected.Y == y);
+
+					Cells[y, x].Print(isCursor, isSelected);
 					
 					Console.Write(" ");
-
-					isCursor = false;
 				}
                 Console.WriteLine();
             }
@@ -44,9 +43,41 @@ namespace TriVRud
 			{
 				for (int x = 0; x < Width; x++)
 				{
-					Cells[y, x] = new Cell((CellColors)random.Next(Enum.GetValues(typeof(CellColors)).Length));
+					CellColors color = (CellColors)random.Next(Enum.GetValues(typeof(CellColors)).Length);
+
+                    Cells[y, x] = new Cell(color);
 				}
 			}
 		}
-	}
+
+		public void SelectOrSwap()
+		{
+			if(Selected == null)
+			{
+                Selected = new Point(Cursor.Y, Cursor.X);
+            }
+			else
+			{
+				int x = Math.Abs(Cursor.X - Selected.X);
+				int y = Math.Abs(Cursor.Y - Selected.Y);
+
+				if((x == 1 &&  y == 0) || (x == 0 && y == 1))
+				{
+					SwapCells(Cursor, Selected);
+					Selected = null;
+					Print();
+				}
+
+			}
+			
+		}
+
+		private void SwapCells(Point cursor, Point selected)
+		{
+			Cell temp = Cells[cursor.Y, cursor.X];
+			Cells[cursor.Y, cursor.X] = Cells[selected.Y, selected.X];
+			Cells[selected.Y, selected.X] = temp;
+
+        }
+    }
 }

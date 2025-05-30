@@ -2,13 +2,13 @@
 class Program
 {
     public static Field _field = new Field();
+    public static bool _isGameRunning = true;
     static void Main(string[] args)
     {
         do
         { 
             _field.Print();
             HandleInput();
-            Thread.Sleep(500); Console.Clear();
         } while (true);
     }
 
@@ -19,7 +19,7 @@ class Program
         switch(key)
         {
             case ConsoleKey.UpArrow:
-                if (Field.Cursor.Y - 1 >= 0)
+                if (Field.Cursor.Y > 0)
                 {
                     Field.Cursor.Y--;
                 }
@@ -33,7 +33,7 @@ class Program
                 break;
 
             case ConsoleKey.LeftArrow:
-                if(Field.Cursor.X - 1 >= 0)
+                if(Field.Cursor.X > 0)
                 {
                     Field.Cursor.X--;
                 }
@@ -44,6 +44,10 @@ class Program
                 {
                     Field.Cursor.X++;
                 }
+                break;
+
+            case ConsoleKey.Spacebar:
+                _field.SelectOrSwap();
                 break;
         }
     }

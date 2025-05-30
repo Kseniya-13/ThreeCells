@@ -6,8 +6,7 @@ namespace TriVRud
         Red,
         Blue,
         Green,
-        Mugnetto,
+        Magento,
         Yellow
     }
 }
-

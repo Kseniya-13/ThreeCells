@@ -5,23 +5,23 @@
         public int X { get; set; }
         public int Y { get; set; }
 
-        public Point(int x = 0, int y = 0)
+        public Point(int y = 0, int x = 0)
         {
-            X = x;
             Y = y;
+            X = x;
         }
 
         public Point(Point point)
         {
-            X = point.X;
             Y = point.Y;
+            X = point.X;
         }
 
         public override bool Equals(object? obj)
         {
             if(obj  is Point other)
             {
-                return X == other.X && Y == other.Y;
+                return X == other.Y && Y == other.X;
             }
             return false;
         }

@@ -11,9 +11,11 @@ namespace TriVRud
 		}
 
 
-        public void Print(bool isCursor)
+        public void Print(bool isCursor, bool isSelected)
 		{
-			switch(Color)
+            Console.ForegroundColor = ConsoleColor.Black;
+
+            switch (Color)
 			{
 				case CellColors.Red:
 					Console.BackgroundColor = ConsoleColor.Red;
@@ -21,7 +23,7 @@ namespace TriVRud
 				case CellColors.Yellow:
                     Console.BackgroundColor = ConsoleColor.Yellow;
                     break;
-				case CellColors.Mugnetto:
+				case CellColors.Magento:
                     Console.BackgroundColor = ConsoleColor.Magenta;
                     break;
 				case CellColors.Blue:
@@ -32,9 +34,12 @@ namespace TriVRud
 					break;
             }
 
-			if(isCursor)
+			if(isSelected)
 			{
-				Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write("()");
+            }
+			else if(isCursor)
+			{
 				Console.Write("[]");
 			}
 			else
